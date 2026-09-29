@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "title": "Un futuro energético más limpio es posible",
+        "category": "Medio Ambiente",
+        "date": "21 SEP 2026",
+        "author": "ÁGORA",
+        "image": "assets/images/energia.jpg",
+        "excerpt": "Países y comunidades están apostando por energías renovables para construir un futuro más sostenible.",
+        "content": "La transición hacia fuentes de energía más limpias representa uno de los principales desafíos y oportunidades de la actualidad. Comunidades, empresas y gobiernos están desarrollando nuevas alternativas para reducir el impacto ambiental y avanzar hacia modelos energéticos sostenibles."
+    },
+    {
+        "id": 2,
+        "title": "Voces que construyen cambio",
+        "category": "Sociedad",
+        "date": "20 SEP 2026",
+        "author": "ÁGORA",
+        "image": "assets/images/voces.jpg",
+        "excerpt": "Personas y comunidades comparten experiencias que generan nuevas perspectivas y transformaciones.",
+        "content": "Las historias de las personas permiten conocer diferentes experiencias y perspectivas. Desde iniciativas comunitarias hasta proyectos sociales, estas voces muestran cómo las acciones individuales y colectivas pueden generar cambios."
+    },
+    {
+        "id": 3,
+        "title": "La IA como aliada en la educación",
+        "category": "Tecnología",
+        "date": "19 SEP 2026",
+        "author": "ÁGORA",
+        "image": "assets/images/ia-educacion.jpg",
+        "excerpt": "Las herramientas de inteligencia artificial están transformando las formas de aprender y enseñar.",
+        "content": "La inteligencia artificial está incorporándose progresivamente a diferentes procesos educativos. Su utilización puede apoyar la creación de contenidos, la búsqueda de información y el desarrollo de nuevas experiencias de aprendizaje."
+    },
+    {
+        "id": 4,
+        "title": "Ciudades más verdes para el futuro",
+        "category": "Medio Ambiente",
+        "date": "18 SEP 2026",
+        "author": "ÁGORA",
+        "image": "assets/images/ciudades-verdes.jpg",
+        "excerpt": "Las ciudades buscan nuevas estrategias para mejorar sus espacios y reducir su impacto ambiental.",
+        "content": "El crecimiento de las ciudades plantea nuevos desafíos relacionados con movilidad, espacios públicos y sostenibilidad. Diferentes iniciativas buscan construir entornos urbanos más verdes y habitables."
+    },
+    {
+        "id": 5,
+        "title": "Nuevas experiencias que conectan comunidades",
+        "category": "Actualidad",
+        "date": "17 SEP 2026",
+        "author": "ÁGORA",
+        "image": "assets/images/comunidades.jpg",
+        "excerpt": "Proyectos y experiencias locales están creando nuevas formas de conexión entre las comunidades.",
+        "content": "Las iniciativas comunitarias permiten crear espacios de encuentro, participación e intercambio de experiencias. Estas propuestas contribuyen al fortalecimiento de los vínculos entre las personas."
+    },
+    {
+        "id": 6,
+        "title": "Tecnología para transformar nuestras experiencias",
+        "category": "Tecnología",
+        "date": "16 SEP 2026",
+        "author": "ÁGORA",
+        "image": "assets/images/tecnologia.jpg",
+        "excerpt": "Las nuevas tecnologías ofrecen herramientas para transformar la manera en que interactuamos con la información.",
+        "content": "La evolución tecnológica ha cambiado la manera en que las personas acceden, comparten y producen información. Las plataformas digitales continúan generando nuevas posibilidades de interacción."
+    }
+]
