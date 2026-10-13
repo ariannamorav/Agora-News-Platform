@@ -1,0 +1,83 @@
+
+<section class="news-page">
+  <header class="page-heading">
+    <p class="eyebrow">ACTUALIDAD · IDEAS · PERSPECTIVAS</p>
+    <h1>Todas las noticias</h1>
+    <p class="page-description">
+      Historias, análisis y perspectivas de nuestro entorno.
+    </p>
+  </header>
+
+  <nav class="category-filters" aria-label="Filtrar noticias por categoría">
+    <button
+      type="button"
+      class="filter-button"
+      [class.selected]="selectedCategory === 'Todos'"
+      (click)="selectCategory('Todos')">
+      Todos
+    </button>
+
+    @for (category of categories; track category) {
+      <button
+        type="button"
+        class="filter-button"
+        [class.selected]="selectedCategory === category"
+        (click)="selectCategory(category)">
+        {{ category }}
+      </button>
+    }
+  </nav>
+
+  @if (loading) {
+    <p class="status-message">Cargando noticias...</p>
+  } @else if (errorMessage) {
+    <p class="status-message error-message">{{ errorMessage }}</p>
+  } @else if (filteredNews.length === 0) {
+    <p class="empty-state">
+      No hay noticias disponibles en esta categoría.
+    </p>
+  } @else {
+    <section class="news-grid" aria-label="Listado de noticias">
+      @for (item of filteredNews; track item.id) {
+        <article class="news-card">
+          <a
+            class="card-image-link"
+            [routerLink]="['/noticia', item.id]"
+            [attr.aria-label]="'Leer ' + item.title">
+
+            @if (getImageUrl(item.image)) {
+              <img
+                class="card-image"
+                [src]="getImageUrl(item.image)"
+                [alt]="item.title"
+                loading="lazy">
+            } @else {
+              <div class="card-image image-placeholder">
+                <span>ÁGORA</span>
+              </div>
+            }
+          </a>
+
+          <div class="card-content">
+            <div class="article-meta">
+              <span class="category-label">{{ item.category }}</span>
+              <span class="article-date">{{ item.date }}</span>
+            </div>
+
+            <h2>
+              <a [routerLink]="['/noticia', item.id]">
+                {{ item.title }}
+              </a>
+            </h2>
+
+            <p class="article-excerpt">{{ item.excerpt }}</p>
+
+            <a class="read-more" [routerLink]="['/noticia', item.id]">
+              Ver más <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+      }
+    </section>
+  }
+</section>

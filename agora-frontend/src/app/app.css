@@ -1,0 +1,224 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  color: #202020;
+  background: #ffffff;
+  font-family: "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ENCABEZADO */
+
+.site-header {
+  position: relative;
+  z-index: 10;
+  background: #ffffff;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.header-container {
+  width: min(1240px, calc(100% - 40px));
+  min-height: 68px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  color: #202020;
+  text-decoration: none;
+}
+
+.brand-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 27px;
+  font-weight: 400;
+  letter-spacing: -1.5px;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.main-nav a {
+  position: relative;
+  padding: 10px 8px;
+  color: #303030;
+  font-size: 12px;
+  font-weight: 400;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: #c42c35;
+  background: transparent;
+}
+
+.main-nav a.active::after {
+  position: absolute;
+  right: 8px;
+  bottom: 3px;
+  left: 8px;
+  height: 2px;
+  background: #c42c35;
+  content: "";
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  gap: 12px;
+}
+
+.search-button {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #252525;
+  cursor: pointer;
+}
+
+.search-button svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+}
+
+.login-button {
+  padding: 10px 13px;
+  border-radius: 18px;
+  background: #171717;
+  color: #ffffff;
+  font-size: 11px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.login-button:hover {
+  background: #c42c35;
+}
+
+/* CONTENIDO GENERAL */
+
+.page-container {
+  width: min(1240px, calc(100% - 40px));
+  min-height: 65vh;
+  margin: 0 auto;
+  padding: 24px 0 60px;
+  box-sizing: border-box;
+}
+
+/* PIE DE PÁGINA */
+
+.site-footer {
+  background: #202020;
+  color: #d5d5d5;
+}
+
+.footer-container {
+  width: min(1240px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 35px 0;
+  text-align: center;
+}
+
+.footer-brand {
+  color: #ffffff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 25px;
+  letter-spacing: -1px;
+  text-decoration: none;
+}
+
+.footer-container p {
+  margin: 10px 0 0;
+  color: #c4c4c4;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.footer-container .copyright {
+  margin-top: 20px;
+  color: #a5a5a5;
+  font-size: 11px;
+}
+
+/* ACCESIBILIDAD */
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #c42c35;
+  outline-offset: 4px;
+}
+
+/* TABLETAS Y MÓVILES */
+
+@media (max-width: 760px) {
+  .header-container {
+    grid-template-columns: 1fr auto;
+    padding: 14px 0;
+    gap: 12px;
+  }
+
+  .main-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 2px;
+  }
+
+  .main-nav a {
+    padding: 9px 8px;
+    font-size: 12px;
+  }
+
+  .header-actions {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .page-container {
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  .header-container,
+  .page-container,
+  .footer-container {
+    width: calc(100% - 28px);
+  }
+
+  .brand-name {
+    font-size: 24px;
+  }
+
+  .login-button {
+    padding: 9px 10px;
+    font-size: 10px;
+  }
+
+  .main-nav a {
+    padding: 8px 7px;
+    font-size: 11px;
+  }
+}

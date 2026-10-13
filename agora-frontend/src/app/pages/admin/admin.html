@@ -1,0 +1,380 @@
+<section class="admin-page">
+  <header class="admin-heading">
+    <div>
+      <p class="eyebrow">PANEL DE CONTROL · ÁGORA</p>
+      <h1>Administrar noticias</h1>
+      <p class="page-description">
+        Gestiona las noticias de la plataforma desde un solo lugar.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="primary-button"
+      (click)="newArticle()">
+      + Crear noticia
+    </button>
+  </header>
+
+  @if (noticeMessage) {
+    <div class="notice-message" role="status">
+      {{ noticeMessage }}
+    </div>
+  }
+
+  <section class="admin-summary">
+    <div class="summary-card">
+      <span class="summary-label">Total de noticias</span>
+      <strong>{{ articles.length }}</strong>
+    </div>
+
+    <div class="summary-card">
+      <span class="summary-label">Almacenamiento</span>
+      <strong class="summary-text">Navegador</strong>
+    </div>
+  </section>
+
+  @if (showForm) {
+    <section class="editor-panel" #formSection>
+      <div class="editor-heading">
+        <div>
+          <p class="eyebrow">
+            {{ editingId === null ? 'NUEVO CONTENIDO' : 'ACTUALIZACIÓN DE CONTENIDO' }}
+          </p>
+
+          <h2>
+            {{ editingId === null ? 'Crear noticia' : 'Editar noticia' }}
+          </h2>
+        </div>
+
+        <button
+          type="button"
+          class="close-button"
+          (click)="cancelForm()">
+          Cerrar
+        </button>
+      </div>
+
+      <form
+        #articleForm="ngForm"
+        (ngSubmit)="saveArticle(articleForm)"
+        novalidate>
+
+        <div class="form-grid">
+          <div class="form-field full-width">
+            <label for="title">Título *</label>
+
+            <input
+              id="title"
+              name="title"
+              type="text"
+              [(ngModel)]="formData.title"
+              #titleField="ngModel"
+              required
+              minlength="5"
+              maxlength="180"
+              placeholder="Escribe el título de la noticia">
+
+            @if (titleField.invalid && titleField.touched) {
+              @if (titleField.errors?.['required']) {
+                <small class="field-error">El título es obligatorio.</small>
+              }
+
+              @if (titleField.errors?.['minlength']) {
+                <small class="field-error">
+                  El título debe tener al menos 5 caracteres.
+                </small>
+              }
+
+              @if (titleField.errors?.['maxlength']) {
+                <small class="field-error">
+                  El título no puede superar los 180 caracteres.
+                </small>
+              }
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="category">Categoría *</label>
+
+            <input
+              id="category"
+              name="category"
+              type="text"
+              [(ngModel)]="formData.category"
+              #categoryField="ngModel"
+              required
+              maxlength="60"
+              placeholder="Ej. Política">
+
+            @if (categoryField.invalid && categoryField.touched) {
+              @if (categoryField.errors?.['required']) {
+                <small class="field-error">
+                  La categoría es obligatoria.
+                </small>
+              }
+
+              @if (categoryField.errors?.['maxlength']) {
+                <small class="field-error">
+                  Máximo 60 caracteres.
+                </small>
+              }
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="author">Autor *</label>
+
+            <input
+              id="author"
+              name="author"
+              type="text"
+              [(ngModel)]="formData.author"
+              #authorField="ngModel"
+              required
+              minlength="2"
+              maxlength="80"
+              placeholder="Nombre del autor">
+
+            @if (authorField.invalid && authorField.touched) {
+              @if (authorField.errors?.['required']) {
+                <small class="field-error">El autor es obligatorio.</small>
+              }
+
+              @if (authorField.errors?.['minlength']) {
+                <small class="field-error">
+                  Escribe al menos 2 caracteres.
+                </small>
+              }
+
+              @if (authorField.errors?.['maxlength']) {
+                <small class="field-error">
+                  Máximo 80 caracteres.
+                </small>
+              }
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="date">Fecha *</label>
+
+            <input
+              id="date"
+              name="date"
+              type="date"
+              [(ngModel)]="formData.date"
+              #dateField="ngModel"
+              required>
+
+            @if (dateField.invalid && dateField.touched) {
+              <small class="field-error">Selecciona una fecha.</small>
+            }
+          </div>
+
+          <div class="form-field full-width">
+            <label for="imageFile">Imagen de la noticia *</label>
+
+            <input
+              id="imageFile"
+              name="imageFile"
+              type="file"
+              accept="image/*"
+              (change)="onImageSelected($event)"
+              [required]="editingId === null && !selectedImage">
+
+            <small class="field-hint">
+              Selecciona una imagen de tu computador. Tamaño máximo: 5 MB.
+            </small>
+
+            @if (imagePreview) {
+              <div class="image-preview">
+                <img
+                  [src]="imagePreview"
+                  alt="Vista previa de la imagen">
+
+                <p>
+                  {{ selectedImage?.name || 'Imagen guardada actualmente' }}
+                </p>
+              </div>
+            } @else {
+              <p class="field-hint">
+                Aún no has seleccionado una imagen.
+              </p>
+            }
+          </div>
+
+          <div class="form-field full-width">
+            <label for="excerpt">Resumen *</label>
+
+            <textarea
+              id="excerpt"
+              name="excerpt"
+              [(ngModel)]="formData.excerpt"
+              #excerptField="ngModel"
+              required
+              minlength="10"
+              maxlength="300"
+              rows="3"
+              placeholder="Escribe un resumen de máximo 300 caracteres"></textarea>
+
+            <div class="character-counter">
+              <span
+                [class.counter-warning]="formData.excerpt.length >= 280"
+                [class.counter-limit]="formData.excerpt.length >= 300">
+                {{ formData.excerpt.length }}/300 caracteres
+              </span>
+
+              <span class="character-limit-hint">
+                Máximo permitido: 300 caracteres.
+              </span>
+            </div>
+
+            @if (excerptField.invalid && excerptField.touched) {
+              @if (excerptField.errors?.['required']) {
+                <small class="field-error">
+                  El resumen es obligatorio.
+                </small>
+              }
+
+              @if (excerptField.errors?.['minlength']) {
+                <small class="field-error">
+                  El resumen debe tener al menos 10 caracteres.
+                </small>
+              }
+
+              @if (excerptField.errors?.['maxlength']) {
+                <small class="field-error">
+                  El resumen no puede superar los 300 caracteres.
+                </small>
+              }
+            }
+          </div>
+
+          <div class="form-field full-width">
+            <label for="content">Contenido completo *</label>
+
+            <textarea
+              id="content"
+              name="content"
+              [(ngModel)]="formData.content"
+              #contentField="ngModel"
+              required
+              minlength="20"
+              rows="7"
+              placeholder="Escribe el contenido completo de la noticia"></textarea>
+
+            @if (contentField.invalid && contentField.touched) {
+              @if (contentField.errors?.['required']) {
+                <small class="field-error">
+                  El contenido es obligatorio.
+                </small>
+              }
+
+              @if (contentField.errors?.['minlength']) {
+                <small class="field-error">
+                  El contenido debe tener al menos 20 caracteres.
+                </small>
+              }
+            }
+          </div>
+        </div>
+
+        @if (formError) {
+          <p class="form-error" role="alert">
+            {{ formError }}
+          </p>
+        }
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="secondary-button"
+            (click)="cancelForm()"
+            [disabled]="saving">
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            class="primary-button"
+            [disabled]="saving">
+            {{
+              saving
+                ? 'Guardando...'
+                : editingId === null
+                  ? 'Guardar noticia'
+                  : 'Guardar cambios'
+            }}
+          </button>
+        </div>
+      </form>
+    </section>
+  }
+
+  <section class="admin-list">
+    <div class="list-heading">
+      <h2>Noticias registradas</h2>
+      <span>{{ articles.length }} en total</span>
+    </div>
+
+    @if (articles.length === 0) {
+      <div class="empty-state">
+        <h3>No hay noticias disponibles</h3>
+        <p>Crea una noticia para comenzar a administrar el contenido.</p>
+      </div>
+    } @else {
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Noticia</th>
+              <th>Categoría</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (article of articles; track article.id) {
+              <tr>
+                <td>
+                  <div class="table-article">
+                    <img
+                      [src]="imageUrls[article.id] || '/' + article.image"
+                      [alt]="article.title">
+
+                    <div>
+                      <strong>{{ article.title }}</strong>
+                      <small>{{ article.author }}</small>
+                    </div>
+                  </div>
+                </td>
+
+                <td>{{ article.category }}</td>
+                <td>{{ article.date }}</td>
+
+                <td>
+                  <div class="table-actions">
+                    <button
+                      type="button"
+                      class="edit-button"
+                      (click)="editArticle(article)">
+                      Editar
+                    </button>
+
+                    <button
+                      type="button"
+                      class="delete-button"
+                      (click)="deleteArticle(article.id)">
+                      Eliminar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</section>

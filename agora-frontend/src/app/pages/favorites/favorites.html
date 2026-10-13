@@ -1,0 +1,72 @@
+<section class="favorites-page">
+  <header class="page-heading">
+    <p class="eyebrow">TU SELECCIÓN PERSONAL</p>
+    <h1>Mis favoritos</h1>
+    <p class="page-description">
+      Aquí encontrarás las noticias que guardaste para leer más tarde.
+    </p>
+  </header>
+
+  @if (loading) {
+    <p class="status-message">Cargando tus favoritos...</p>
+  } @else if (errorMessage) {
+    <p class="status-message error-message">{{ errorMessage }}</p>
+  } @else if (favoriteNews.length === 0) {
+    <div class="empty-state">
+      <p class="empty-icon">♡</p>
+      <h2>Aún no tienes favoritos</h2>
+      <p>Explora las noticias y guarda las que más te interesen.</p>
+      <a routerLink="/noticias" class="button-primary">
+        Explorar noticias →
+      </a>
+    </div>
+  } @else {
+    <p class="favorites-count">
+      {{ favoriteNews.length }}
+      {{ favoriteNews.length === 1 ? 'noticia guardada' : 'noticias guardadas' }}
+    </p>
+
+    <div class="favorites-grid">
+      @for (item of favoriteNews; track item.id) {
+        <article class="favorite-card">
+          <a
+            class="favorite-image-link"
+            [routerLink]="['/noticia', item.id]">
+
+            @if (item.image) {
+              <img
+                [src]="getImageUrl(item.image)"
+                [alt]="item.title">
+            } @else {
+              <div class="image-placeholder">ÁGORA</div>
+            }
+          </a>
+
+          <div class="favorite-card-content">
+            <span class="category-label">{{ item.category }}</span>
+
+            <h2>
+              <a [routerLink]="['/noticia', item.id]">
+                {{ item.title }}
+              </a>
+            </h2>
+
+            <p>{{ item.excerpt }}</p>
+
+            <div class="favorite-card-actions">
+              <a [routerLink]="['/noticia', item.id]">
+                Leer noticia →
+              </a>
+
+              <button
+                type="button"
+                (click)="removeFavorite(item.id)">
+                Quitar de favoritos
+              </button>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>

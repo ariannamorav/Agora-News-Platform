@@ -1,0 +1,86 @@
+<section class="categories-page">
+  <header class="page-heading">
+    <p class="eyebrow">EXPLORA NUEVAS PERSPECTIVAS</p>
+    <h1>Categorías</h1>
+    <p class="page-description">
+      Descubre historias organizadas por los temas que más te interesan.
+    </p>
+  </header>
+
+  @if (loading) {
+    <p class="status-message">Cargando categorías...</p>
+  } @else if (errorMessage) {
+    <p class="status-message error-message">{{ errorMessage }}</p>
+  } @else if (categories.length === 0) {
+    <p class="empty-state">No hay categorías disponibles.</p>
+  } @else {
+    <nav class="categories-list" aria-label="Categorías de noticias">
+      <button
+        type="button"
+        class="category-button"
+        [class.selected]="selectedCategory === 'Todas'"
+        (click)="selectCategory('Todas')">
+        Todas las noticias
+        <span>{{ news.length }}</span>
+      </button>
+
+      @for (category of categories; track category) {
+        <button
+          type="button"
+          class="category-button"
+          [class.selected]="selectedCategory === category"
+          (click)="selectCategory(category)">
+          {{ category }}
+          <span>{{ countNews(category) }}</span>
+        </button>
+      }
+    </nav>
+
+    <section class="category-results">
+      <div class="section-heading">
+        <h2>{{ selectedCategory === 'Todas' ? 'Todas las noticias' : selectedCategory }}</h2>
+        <span>{{ filteredNews.length }} resultados</span>
+      </div>
+
+      @if (filteredNews.length === 0) {
+        <p class="empty-state">
+          No hay noticias en esta categoría.
+        </p>
+      } @else {
+        <div class="category-news-grid">
+          @for (item of filteredNews; track item.id) {
+            <article class="category-news-card">
+              <a
+                class="category-news-image"
+                [routerLink]="['/noticia', item.id]">
+
+                @if (item.image) {
+                  <img [src]="getImageUrl(item.image)" [alt]="item.title">
+                } @else {
+                  <div class="image-placeholder">ÁGORA</div>
+                }
+              </a>
+
+              <div class="category-news-content">
+                <span class="category-label">{{ item.category }}</span>
+                <p class="article-date">{{ item.date }}</p>
+
+                <h3>
+                  <a [routerLink]="['/noticia', item.id]">
+                    {{ item.title }}
+                  </a>
+                </h3>
+
+                <p class="article-excerpt">{{ item.excerpt }}</p>
+
+                <a class="read-more" [routerLink]="['/noticia', item.id]">
+                  Leer noticia →
+                </a>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </section>
+  }
+</section>

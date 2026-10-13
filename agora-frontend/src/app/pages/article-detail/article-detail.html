@@ -1,0 +1,60 @@
+<section class="article-detail-page">
+
+  <a routerLink="/noticias" class="back-link">
+    ← Volver a noticias
+  </a>
+
+  @if (loading) {
+    <p>Cargando noticia...</p>
+  } @else if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  } @else if (article) {
+
+    <article class="article-content">
+
+      <header class="article-header">
+        <span class="category-label">
+          {{ article.category }}
+        </span>
+
+        <h1>{{ article.title }}</h1>
+
+        <div class="article-metadata">
+          <span>Por {{ article.author }}</span>
+          <span>{{ article.date }}</span>
+        </div>
+      </header>
+
+      @if (article.image) {
+        <img
+          class="article-cover"
+          [src]="getImageUrl(article.image)"
+          [alt]="article.title"
+        />
+      }
+
+      <div class="article-body">
+        <p class="article-excerpt">
+          {{ article.excerpt }}
+        </p>
+
+        <p class="article-text">
+          {{ article.content }}
+        </p>
+      </div>
+
+      <button
+        type="button"
+        class="favorite-button"
+        (click)="toggleFavorite()"
+      >
+        {{ isFavorite ? '♥ Quitar de favoritos' : '♡ Añadir a favoritos' }}
+      </button>
+
+    </article>
+
+  } @else {
+    <h1>Noticia no encontrada</h1>
+  }
+
+</section>

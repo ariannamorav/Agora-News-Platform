@@ -1,0 +1,118 @@
+ <section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">IDEAS / PERSONAS / MUNDO</p>
+    <h1>Noticias con más perspectiva</h1>
+    <p class="hero-description">
+      Explora historias que informan, inspiran y generan conversación.
+    </p>
+    <div class="hero-actions">
+      <a class="button-primary" routerLink="/noticias">
+        Explorar noticias <span aria-hidden="true">→</span>
+      </a>
+      <span class="hero-pagination">01 <span>—</span> 03 <span>→</span></span>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <img src="/assets/images/ciudades-verdes.jpg" alt="Arquitectura urbana y ciudad moderna">
+    <div class="hero-image-caption">
+      Un mundo más informado también es un mundo más conectado.
+    </div>
+  </div>
+</section>
+
+<section class="featured-section">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">SELECCIÓN EDITORIAL</p>
+      <h2>Historias destacadas</h2>
+    </div>
+    <a class="text-link" routerLink="/noticias">Ver todas <span>→</span></a>
+  </div>
+
+@if (loading) {
+<p class="status-message">Cargando noticias...</p>
+} @else if (errorMessage) {
+<p class="status-message error-message">{{ errorMessage }}</p>
+} @else if (news.length === 0) {
+<p class="status-message">Todavía no hay noticias disponibles.</p>
+} @else {
+<div class="featured-grid">
+<article class="featured-main">
+<a [routerLink]="['/noticia', news[0].id]" class="featured-image">
+<img [src]="getImageUrl(news[0].image)" [alt]="news[0].title">
+<div class="featured-overlay">
+<span class="category-label">{{ news[0].category }}</span>
+<h3>{{ news[0].title }}</h3>
+<p>{{ news[0].date }}</p>
+</div>
+</a>
+</article>
+
+  <div class="featured-side">
+    @for (item of news.slice(1, 3); track item.id) {
+      <article class="side-story">
+        <a [routerLink]="['/noticia', item.id]" class="side-image">
+          <img [src]="getImageUrl(item.image)" [alt]="item.title">
+        </a>
+        <div class="side-story-content">
+          <span class="category-label">{{ item.category }}</span>
+          <h3><a [routerLink]="['/noticia', item.id]">{{ item.title }}</a></h3>
+          <p class="article-date">{{ item.date }}</p>
+        </div>
+      </article>
+    }
+  </div>
+</div>
+
+}
+
+</section>
+
+<section class="values-section" aria-label="Nuestros valores">
+  <div class="value-item"><span aria-hidden="true">▤</span><p>Información<br><small>con contexto</small></p></div>
+  <div class="value-item"><span aria-hidden="true">✳</span><p>Historias<br><small>reales</small></p></div>
+  <div class="value-item"><span aria-hidden="true">◆</span><p>Una comunidad<br><small>que participa</small></p></div>
+  <div class="value-item"><span aria-hidden="true">◉</span><p>Un futuro<br><small>más consciente</small></p></div>
+</section>
+
+<section class="community-banner">
+  <div>
+    <p class="eyebrow">EL ESPACIO PARA NUEVAS PERSPECTIVAS</p>
+    <h2>Más que noticias,<br>una comunidad.</h2>
+    <p>En ÁGORA creemos en el poder de las ideas para construir un mejor mañana.</p>
+  </div>
+  <a class="community-arrow" routerLink="/noticias" aria-label="Descubrir todas las noticias">→</a>
+</section>
+
+<section class="latest-section">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">DESCUBRE MÁS</p>
+      <h2>Últimas noticias</h2>
+    </div>
+    <a class="text-link" routerLink="/noticias">Ver todas <span>→</span></a>
+  </div>
+
+@if (!loading && !errorMessage && news.length > 0) {
+<div class="latest-grid">
+@for (item of news; track item.id) {
+<article class="news-card">
+<a class="card-image-link" [routerLink]="['/noticia', item.id]">
+<img class="card-image" [src]="getImageUrl(item.image)" [alt]="item.title" loading="lazy">
+</a>
+<div class="card-content">
+<div class="article-meta">
+<span class="category-label">{{ item.category }}</span>
+<span class="article-date">{{ item.date }}</span>
+</div>
+<h3><a [routerLink]="['/noticia', item.id]">{{ item.title }}</a></h3>
+<p class="article-excerpt">{{ item.excerpt }}</p>
+<a class="read-more" [routerLink]="['/noticia', item.id]">Ver más <span>→</span></a>
+</div>
+</article>
+}
+</div>
+}
+
+</section>

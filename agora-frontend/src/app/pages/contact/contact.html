@@ -1,0 +1,156 @@
+
+<section class="contact-page">
+  <header class="page-heading">
+    <p class="eyebrow">ESTAMOS PARA ESCUCHARTE</p>
+    <h1>Hablemos.</h1>
+    <p class="page-description">
+      ¿Tienes una pregunta, una sugerencia o una historia que merece ser contada?
+      Escríbenos. Nos interesa conocer tu perspectiva.
+    </p>
+  </header>
+
+  <div class="contact-layout">
+    <aside class="contact-information">
+      <p class="eyebrow">CONTACTO EDITORIAL</p>
+      <h2>Las buenas ideas comienzan con una conversación.</h2>
+      <p>
+        En ÁGORA valoramos las preguntas, las propuestas y las diferentes
+        perspectivas de nuestra comunidad.
+      </p>
+
+      <div class="contact-note">
+        <span aria-hidden="true">✉</span>
+        <div>
+          <strong>Escríbenos</strong>
+          <p>Completa el formulario y comparte tu mensaje con nuestro equipo.</p>
+        </div>
+      </div>
+
+      <div class="contact-note">
+        <span aria-hidden="true">◎</span>
+        <div>
+          <strong>Participa</strong>
+          <p>Tus comentarios nos ayudan a mejorar y a contar mejores historias.</p>
+        </div>
+      </div>
+    </aside>
+
+    <form class="contact-form" #contactForm="ngForm" (ngSubmit)="submitForm(contactForm)" novalidate>
+      <h2>Envíanos un mensaje</h2>
+      <p class="form-description">
+        Los campos marcados con * son obligatorios.
+      </p>
+
+      @if (successMessage) {
+        <div class="form-success" role="status">
+          {{ successMessage }}
+        </div>
+      }
+
+      @if (errorMessage) {
+        <div class="form-error" role="alert">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <div class="form-field">
+        <label for="name">Nombre completo *</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          [(ngModel)]="formData.name"
+          #nameField="ngModel"
+          required
+          minlength="3"
+          maxlength="80"
+          autocomplete="name"
+          placeholder="Escribe tu nombre">
+
+        @if (nameField.invalid && nameField.touched) {
+          <small class="field-error">
+            Escribe tu nombre (mínimo 3 caracteres).
+          </small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="email">Correo electrónico *</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          [(ngModel)]="formData.email"
+          #emailField="ngModel"
+          required
+          email
+          maxlength="120"
+          autocomplete="email"
+          placeholder="nombre@correo.com">
+
+        @if (emailField.invalid && emailField.touched) {
+          <small class="field-error">
+            Introduce un correo electrónico válido.
+          </small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="subject">Asunto *</label>
+        <select
+          id="subject"
+          name="subject"
+          [(ngModel)]="formData.subject"
+          #subjectField="ngModel"
+          required>
+          <option value="" disabled>Selecciona un asunto</option>
+          <option value="Sugerencia">Sugerencia</option>
+          <option value="Propuesta editorial">Propuesta editorial</option>
+          <option value="Corrección de información">Corrección de información</option>
+          <option value="Otro">Otro</option>
+        </select>
+
+        @if (subjectField.invalid && subjectField.touched) {
+          <small class="field-error">Selecciona un asunto.</small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="message">Mensaje *</label>
+        <textarea
+          id="message"
+          name="message"
+          [(ngModel)]="formData.message"
+          #messageField="ngModel"
+          required
+          minlength="10"
+          maxlength="1500"
+          rows="6"
+          placeholder="Cuéntanos cómo podemos ayudarte..."></textarea>
+
+        <div class="message-footer">
+          @if (messageField.invalid && messageField.touched) {
+            <small class="field-error">
+              El mensaje debe tener al menos 10 caracteres.
+            </small>
+          } @else {
+            <small>Comparte tu idea con nosotros.</small>
+          }
+
+          <small>{{ formData.message.length }}/1500</small>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="submit-button"
+        [disabled]="sending">
+        {{ sending ? 'Procesando...' : 'Enviar mensaje →' }}
+      </button>
+
+      <p class="privacy-note">
+        Este formulario es parte del proyecto académico ÁGORA.
+      </p>
+    </form>
+  </div>
+</section>

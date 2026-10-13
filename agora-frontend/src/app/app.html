@@ -1,0 +1,72 @@
+<header class="site-header">
+  <div class="header-container">
+    <a
+      class="brand"
+      routerLink="/"
+      aria-label="ÁGORA, página de inicio">
+      <span class="brand-name">ÁGORA</span>
+    </a>
+
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">
+        Inicio
+      </a>
+
+      <a routerLink="/noticias" routerLinkActive="active">
+        Noticias
+      </a>
+
+      <a routerLink="/categorias" routerLinkActive="active">
+        Categorías
+      </a>
+
+      <a routerLink="/favoritos" routerLinkActive="active">
+        Favoritos
+      </a>
+
+      <a routerLink="/contacto" routerLinkActive="active">
+        Contacto
+      </a>
+    </nav>
+
+    <div class="header-actions">
+      <button
+        class="search-button"
+        type="button"
+        aria-label="Buscar noticias"
+        title="Buscar noticias">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="10.8" cy="10.8" r="6.5"></circle>
+          <path d="m16 16 4.2 4.2"></path>
+        </svg>
+      </button>
+
+      <a
+        class="login-button"
+        routerLink="/admin">
+        Admin
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="page-container">
+  <router-outlet />
+</main>
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <a class="footer-brand" routerLink="/">
+      ÁGORA
+    </a>
+
+    <p>Información, contexto y nuevas perspectivas.</p>
+
+    <p class="copyright">
+      © 2026 ÁGORA. Proyecto académico.
+    </p>
+  </div>
+</footer>
